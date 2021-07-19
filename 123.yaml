@@ -1,0 +1,13 @@
+---
+ - hosts: all
+   become: yes
+   gather_facts: true
+
+   tasks:
+   - name: system uptime
+     shell: uptime
+     register: up_time
+     #delegate_to: localhost
+   - debug: var=up_time
+
+

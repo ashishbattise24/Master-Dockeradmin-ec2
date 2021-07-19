@@ -1,0 +1,7 @@
+- name: Run a subset of a terraform environment
+  terraform:
+  project_path: /terraform/ansterra/
+  variables:
+  bucket_name: foobar
+  register:tf_run
+- debug: var={{ tf_run.outputs.bukkit_arn.value }}

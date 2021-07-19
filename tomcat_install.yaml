@@ -1,0 +1,18 @@
+---
+ - hosts: linux
+   become: yes
+
+
+   tasks:
+   - name: install java
+     yum: 
+       name: java-1.8.0-openjdk
+       state: present
+   - name: create tomcat directory
+     file:
+       path: /opt/tomcat
+       state: present
+   - name: install tomcat
+     get_url: 
+        url: https://apache.claz.org/tomcat/tomcat-8/v8.5.59/bin/apache-tomcat-8.5.59.tar.gz
+        dest: "/opt/tomcat"

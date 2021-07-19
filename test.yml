@@ -1,0 +1,12 @@
+---
+ - name: "Gather SystemInfo" 
+   gather_facts: no
+   hosts: linux
+   become: yes
+
+   tasks: 
+   - name: Get uptime
+     shell: uptime
+     register: sys_uptime
+   - debug:
+        var: sys_uptime.stdout 

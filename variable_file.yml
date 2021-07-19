@@ -1,0 +1,7 @@
+---
+  ansible
+  pkg: {
+        {{os_type: Linux ? httpd :apache2}}
+         
+  
+  }     

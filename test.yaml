@@ -1,0 +1,28 @@
+---
+ - hosts: all
+   become: yes
+
+   tasks:
+   - name: system uptime
+     shell: uptime
+     register: up_time
+
+
+   - debug:
+       msg: "{{inventory_hostname}},{{ansible_os_family}},{{ansible_system}},{{ansible_distribution}},{{up_time.stdout.split(',')[0]}}"
+
+   - name: remove old Discovery file
+     file:
+             
+       dest: "./Discovery"
+       state: absent
+   - name: Create Discovery file
+     copy:
+        dest: ./Discovery.csv
+        content: "Hostname,OS Family,OS type,OS Distribution,Uptime\n"
+     delegate_to: localhost
+   - name: Updating info of each server in Discovery.csv
+     lineinfile:
+           path: ./Discovery.csv
+           line: "{{inventory_hostname}},{{ansible_os_family}},{{ansible_system}},{{ansible_distribution}},{{up_time.stdout.split(',')[0]}}"
+     delegate_to: localhost

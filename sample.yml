@@ -1,0 +1,19 @@
+---
+ - hosts: linux
+   gather_facts: no
+   become: yes
+   vars:
+      apache_v: "apache-tomcat-8.5.60"
+
+   tasks:
+   - name: "download tomcat 8"
+     get_url:
+      url: https://mirror.olnevhost.net/pub/apache/tomcat/tomcat-8/v8.5.60/bin/{{apache_v}}.tar.gz 
+      dest: /tmp
+   - name: unarchive tomcat
+     unarchive: 
+       src: /tmp/{{apache_v}}.tar.gz
+       dest: /opt
+       remote_src: yes 
+   - name: start tomcat
+     shell: nohup sh /opt/{{apache_v}}/bin/startup.sh &

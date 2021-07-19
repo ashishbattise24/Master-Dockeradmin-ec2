@@ -1,0 +1,15 @@
+---
+ - name: install pkgs
+   hosts: linux
+   become: yes
+   tasks:
+     - yum:
+         name: "{{pk}}"
+         state: present    
+       loop:
+         - httpd
+         - nginx
+         - git
+
+
+
